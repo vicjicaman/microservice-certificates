@@ -13,7 +13,7 @@ const LOGS = "/certificates/var/log/letsencrypt";
 const CONFIG = "/certificates/etc/letsencrypt";
 const LIB = "/certificates/var/lib/letsencrypt";
 
-console.log("Check certificates for " + DOMAIN + " with " + EMAIL);
+console.log("Check certificates for " + DOMAIN + " with " + EMAIL+"..............");
 
 const stdout = execSync(
   `certbot certificates -d ${DOMAIN} -d *.${DOMAIN} --logs-dir ${LOGS} --config-dir ${CONFIG} --work-dir ${LIB} `
