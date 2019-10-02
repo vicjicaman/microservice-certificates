@@ -1,6 +1,6 @@
 {
   "name": "@nebulario/microservice-certificates",
-  "version": "1.70.6-master",
+  "version": "1.70.1-ssl-job-prod",
   "description": "GraphQL api for auth",
   "main": "src/index.js",
   "repository": "github.com:vicjicaman/microservice-certificates.git",
