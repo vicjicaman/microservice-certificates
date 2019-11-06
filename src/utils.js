@@ -3,14 +3,15 @@ import path from "path";
 import axios from "axios";
 import fs from "fs";
 
-export const apply = async (resource, data, cxt) => {
+export const apply = async (resource, name, data, cxt) => {
   const apiUrl = "https://kubernetes.default.svc.cluster.local/api/v1";
-  const url = `${apiUrl}/${resource}`;
+  const urlRes = `${apiUrl}/${resource}`;
+  const url = `${apiUrl}/${resource}/${name}`;
   const kubeToken = fs.readFileSync(
     "/var/run/secrets/kubernetes.io/serviceaccount/token"
   );
 
-  cxt.logger.debug("entity.apply", { api: apiUrl, resource });
+  cxt.logger.debug("entity.apply", { api: apiUrl, resource, data });
 
   const httpsAgent = new https.Agent({
     keepAlive: true,
@@ -51,7 +52,7 @@ export const apply = async (resource, data, cxt) => {
     } else {
       const resp = await axios({
         method: "post",
-        url,
+        url: urlRes,
         data,
         headers: {
           Authorization: `Bearer ${kubeToken}`,

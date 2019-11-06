@@ -23,6 +23,7 @@ const CERTS = path.join(CONFIG, "live", DOMAIN);
 const CERT_FILE = path.join(CERTS, "fullchain.pem");
 const CERT_KEY = path.join(CERTS, "privkey.pem");
 
+console.log("Starting container");
 const logger = Logger.create({ path: "/var/log/app" });
 const cxt = { logger };
 
@@ -41,6 +42,8 @@ Utils.Process.shutdown(signal =>
 );
 
 (async () => {
+  cxt.logger.debug("service.certificates", { domain: DOMAIN });
+
   const res = await Cerbot.check(params, cxt);
 
   if (res !== null) {
@@ -76,7 +79,8 @@ Utils.Process.shutdown(signal =>
   const data = JSON.stringify(ssl_secret, null, 2);
 
   await KubeUtils.apply(
-    `namespaces/${NAMESPACE}/secrets/${SSL_SECRET_NAME}`,
+    `namespaces/${NAMESPACE}/secrets`,
+    SSL_SECRET_NAME,
     data,
     cxt
   );
